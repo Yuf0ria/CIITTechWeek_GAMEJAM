@@ -13,11 +13,28 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        float speed = 40f;
+        float speed = 20f;
+        float moveX = 0f;
+        float moveY = 0f;
         
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position += new Vector3(0, 1) * speed * Time.deltaTime;
+            moveY = +1f;
         }
+        if (Input.GetKey(KeyCode.S))
+        {
+            moveY = -1f;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            moveX = -1f;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            moveX = +1f;
+        }
+
+        Vector3 moveDir = new Vector3(moveX,moveY);
+        transform.position += moveDir * speed * Time.deltaTime;
     }
 }

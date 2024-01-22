@@ -13,9 +13,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        float speed = 40f;
+        
         if (Input.GetKey(KeyCode.W))
         {
-
+            transform.position += new Vector3(0, 1) * speed * Time.deltaTime;
         }
     }
 }

@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private PlayerBase PlayerCharacterBase;
+
+    private void Awake()
     {
-        
+        PlayerCharacterBase = gameObject.GetComponent<PlayerBase>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetKey(KeyCode.W))
+        {
+
+        }
     }
 }

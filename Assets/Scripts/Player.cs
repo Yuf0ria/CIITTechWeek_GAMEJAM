@@ -1,14 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
-    private PlayerBase PlayerCharacterBase;
 
+
+    private const float MOVE_SPEED = 5f;
+    private Rigidbody2D rigidbody2D;
+    private Vector3 moveDir;
+    private Animator animator;
+    
+    
     private void Awake()
     {
-        PlayerCharacterBase = gameObject.GetComponent<PlayerBase>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -18,9 +26,9 @@ public class Player : MonoBehaviour
 
     private void HandleMovement()
     {
-        float speed = 20f;
         float moveX = 0f;
         float moveY = 0f;
+
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -39,20 +47,20 @@ public class Player : MonoBehaviour
             moveX = +1f;
         }
 
+        moveDir = new Vector3(moveX, moveY).normalized;
 
-        bool isIdle =  moveX == 0 && moveY == 0;
+        bool isIdle = moveX == 0 && moveY == 0;
         if (isIdle)
         {
-            PlayerCharacterBase.PlayIdleAnimation(Vector3.zero);
+            rigidbody2D.velocity = Vector3.zero;
         }
         else
         {
-            Vector3 moveDir = new Vector3(moveX, moveY).normalized;
-            PlayerCharacterBase.WalkingAnimation(moveDir);
-            transform.position += moveDir * speed * Time.deltaTime;
+            rigidbody2D.velocity = moveDir * MOVE_SPEED;
+            animator.SetFloat("Horizontal",moveDir.x);
         }
-
     }
+
 
 
 }

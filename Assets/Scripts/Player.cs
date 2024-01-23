@@ -13,10 +13,15 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        HandleMovement();
+    }
+
+    private void HandleMovement()
+    {
         float speed = 20f;
         float moveX = 0f;
         float moveY = 0f;
-        
+
         if (Input.GetKey(KeyCode.W))
         {
             moveY = +1f;
@@ -34,7 +39,20 @@ public class Player : MonoBehaviour
             moveX = +1f;
         }
 
-        Vector3 moveDir = new Vector3(moveX,moveY);
-        transform.position += moveDir * speed * Time.deltaTime;
+
+        bool isIdle =  moveX == 0 && moveY == 0;
+        if (isIdle)
+        {
+            PlayerCharacterBase.PlayIdleAnimation(Vector3.zero);
+        }
+        else
+        {
+            Vector3 moveDir = new Vector3(moveX, moveY).normalized;
+            PlayerCharacterBase.WalkingAnimation(moveDir);
+            transform.position += moveDir * speed * Time.deltaTime;
+        }
+
     }
+
+
 }
